@@ -10,7 +10,7 @@ public class BadCodeExample {
     public static void main(String[] args) {
         System.out.println("Hello World");
         WebDriver webDriver = new ChromeDriver();
-        webDriver.manage().window().maximize();
+        webDriver.manage().window().fullscreen();
         webDriver.get("https://google.com.ua/");
         WebElement searchField = webDriver.findElement(By.name("q"));
         searchField.sendKeys("Selenium");
