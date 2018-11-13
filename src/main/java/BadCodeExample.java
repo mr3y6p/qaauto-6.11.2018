@@ -13,7 +13,8 @@ public class BadCodeExample {
         webDriver.manage().window().fullscreen();
         webDriver.get("https://google.com.ua/");
         WebElement searchField = webDriver.findElement(By.name("q"));
-        searchField.sendKeys("Selenium");
+        String searchTerm = "Selenium";
+        searchField.sendKeys(searchTerm);
 //        searchField.submit();
         searchField.sendKeys(Keys.ENTER);
 
@@ -21,11 +22,11 @@ public class BadCodeExample {
         System.out.println(resultList.size());
         String newLine = System.getProperty("line.separator");
         for (int i=0; i<resultList.size(); i++){
-            if (resultList.get(i).getText().contains("Selenium")) {
-                System.out.println(i + ") " + resultList.get(i).getText() + newLine + "searchTerm found" + newLine);
+            if (resultList.get(i).getText().contains(searchTerm)) {
+                System.out.println(i + ") " + resultList.get(i).getText() + newLine + searchTerm + " found" + newLine);
             }
             else {
-                System.out.println(i + ") " + resultList.get(i).getText()+ newLine + "searchTerm not found" + newLine);
+                System.out.println(i + ") " + resultList.get(i).getText()+ newLine + searchTerm + " not found" + newLine);
             }
         }
 
