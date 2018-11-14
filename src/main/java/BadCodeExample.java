@@ -46,7 +46,7 @@ public class BadCodeExample {
             }
         }
 
-        webDriver.quit();
+        webDriver.close();
     }
 
 }
