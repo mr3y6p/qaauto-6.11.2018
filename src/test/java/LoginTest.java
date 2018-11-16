@@ -3,77 +3,62 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class LoginTest {
+    WebDriver webDriver;
+    String url;
 
-    @Test
-    public void negativeLoginTest() {
-        String url = "https://www.linkedin.com/";
-        WebDriver webDriver = new ChromeDriver();
+    @BeforeMethod
+    public void beforeMethod() {
+        url = "https://www.linkedin.com";
+        webDriver = new ChromeDriver();
         webDriver.manage().window().fullscreen();
         webDriver.get(url);
+    }
 
-        WebElement emailField = webDriver.findElement(By.xpath("//*[@id='login-email']"));
-        WebElement passwordField = webDriver.findElement(By.xpath("//*[@id='login-password']"));
-        WebElement signInButton = webDriver.findElement(By.xpath("//*[@id='login-submit']"));
+    @AfterMethod
+    public void afterMethod() {
+        webDriver.quit();
+    }
 
-        emailField.sendKeys("a@b.c");
-        passwordField.sendKeys("");
-        signInButton.click();
+    @Test
+    public void emptyPasswordTest() {
+        LoginPage loginPage = new LoginPage(webDriver);
+        loginPage.login("mr3y6p+test@gmail.com", "");
 
         //Verify that page title is "LinkedIn: Log In or Sign Up"
-        Assert.assertEquals(webDriver.getTitle(),"LinkedIn: Log In or Sign Up");
-
-        webDriver.close();
+        Assert.assertEquals(webDriver.getTitle(),"LinkedIn: Log In or Sign Up", "Login page title is wrong.");
+        //Verify that "LogIn" button exist
+        Assert.assertTrue(loginPage.signInButton.isDisplayed(), "LogIn button is absent");
     }
 
     @Test
     public void wrongPasswordTest() {
-        String url = "https://www.linkedin.com";
-        WebDriver webDriver = new ChromeDriver();
-        webDriver.manage().window().fullscreen();
-        webDriver.get(url);
-
-        WebElement emailField = webDriver.findElement(By.xpath("//*[@id='login-email']"));
-        WebElement passwordField = webDriver.findElement(By.xpath("//*[@id='login-password']"));
-        WebElement signInButton = webDriver.findElement(By.xpath("//*[@id='login-submit']"));
-        emailField.sendKeys("mr3y6p+test@gmail.com");
-        passwordField.sendKeys("WrongPassword");
-        signInButton.click();
+        LoginPage loginPage = new LoginPage(webDriver);
+        loginPage.login("mr3y6p+test@gmail.com", "wrongPassword");
 
         WebElement wrongPasswordAlert = webDriver.findElement(By.xpath("//*[@id='error-for-password']"));
         String wrongPasswordMessage = "Hmm, that's not the right password. Please try again or request a new one.";
         //Verify that page url is "https://www.linkedin.com/uas/login-submit?loginSubmitSource=GUEST_HOME"
-        Assert.assertEquals(webDriver.getCurrentUrl(), url+"/uas/login-submit?loginSubmitSource=GUEST_HOME");
+        Assert.assertEquals(webDriver.getCurrentUrl(), url+"/uas/login-submit?loginSubmitSource=GUEST_HOME", "Forgot password page url is wrong");
         //Verify that error message about wrong password appears
-        Assert.assertEquals(wrongPasswordAlert.getText(), wrongPasswordMessage);
-
-        webDriver.close();
+        Assert.assertEquals(wrongPasswordAlert.getText(), wrongPasswordMessage, "Alert message is wrong");
     }
 
     @Test
     public void successfulLoginTest() {
-        String url = "https://www.linkedin.com";
-        WebDriver webDriver = new ChromeDriver();
-        webDriver.manage().window().fullscreen();
-        webDriver.get(url);
-
-        WebElement emailField = webDriver.findElement(By.xpath("//*[@id='login-email']"));
-        WebElement passwordField = webDriver.findElement(By.xpath("//*[@id='login-password']"));
-        WebElement signInButton = webDriver.findElement(By.xpath("//*[@id='login-submit']"));
-        emailField.sendKeys("mr3y6p+test@gmail.com");
-        passwordField.sendKeys("q0w9e8r7");
-        signInButton.click();
+        LoginPage loginPage = new LoginPage(webDriver);
+        loginPage.login("mr3y6p+test@gmail.com", "q0w9e8r7");
 
         WebElement profileButton = webDriver.findElement(By.xpath("//*[@id='profile-nav-item']"));
         //Verify that page url is "https://www.linkedin.com/feed/"
-        Assert.assertEquals(webDriver.getCurrentUrl(), url+"/feed/");
+        Assert.assertEquals(webDriver.getCurrentUrl(), url+"/feed/", "Home page url is wrong");
         //Verify that page title is "LinkedIn"
-        Assert.assertEquals(webDriver.getTitle(), "LinkedIn");
+        Assert.assertTrue(webDriver.getTitle().contains("LinkedIn"), "Home page title is wrong");
         //Verify that "Profile" button exist
-        Assert.assertTrue(profileButton.isDisplayed());
-
-        webDriver.close();
+        Assert.assertTrue(profileButton.isDisplayed(), "Home page profile button is absent");
     }
 }
