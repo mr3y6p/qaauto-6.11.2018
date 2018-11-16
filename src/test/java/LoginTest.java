@@ -72,7 +72,7 @@ public class LoginTest {
         //Verify that page title is "LinkedIn"
         Assert.assertEquals(webDriver.getTitle(), "LinkedIn");
         //Verify that "Profile" button exist
-        Assert.assertEquals(profileButton.isDisplayed(),true);
+        Assert.assertTrue(profileButton.isDisplayed());
 
         webDriver.close();
     }
