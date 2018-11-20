@@ -8,6 +8,9 @@ public class LoginPage {
     WebElement emailField;
     WebElement passwordField;
     WebElement signInButton;
+    WebElement forgotPasswordLink;
+    WebElement submitRegistrationButton;
+    WebElement wrongRegistrationAlert;
 
     public LoginPage(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -18,6 +21,9 @@ public class LoginPage {
         emailField = webDriver.findElement(By.xpath("//*[@id='login-email']"));
         passwordField = webDriver.findElement(By.xpath("//*[@id='login-password']"));
         signInButton = webDriver.findElement(By.xpath("//*[@id='login-submit']"));
+        forgotPasswordLink = webDriver.findElement(By.xpath("//*[@class='link-forgot-password']"));
+        submitRegistrationButton = webDriver.findElement(By.xpath("//*[@id='registration-submit']"));
+        wrongRegistrationAlert = webDriver.findElement(By.xpath("//*[@class='reg-alert']"));
     }
 
     public void login(String userEmail, String userPass) {

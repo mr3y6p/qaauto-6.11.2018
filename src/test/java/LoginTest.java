@@ -30,7 +30,7 @@ public class LoginTest {
         loginPage.login("mr3y6p+test@gmail.com", "");
 
         //Verify that page title is "LinkedIn: Log In or Sign Up"
-        Assert.assertEquals(webDriver.getTitle(),"LinkedIn: Log In or Sign Up", "Login page title is wrong.");
+        Assert.assertEquals(webDriver.getTitle(), "LinkedIn: Log In or Sign Up", "Login page title is wrong.");
         //Verify that "LogIn" button exist
         Assert.assertTrue(loginPage.signInButton.isDisplayed(), "LogIn button is absent");
     }
@@ -43,7 +43,7 @@ public class LoginTest {
         WebElement wrongPasswordAlert = webDriver.findElement(By.xpath("//*[@id='error-for-password']"));
         String wrongPasswordMessage = "Hmm, that's not the right password. Please try again or request a new one.";
         //Verify that page url is "https://www.linkedin.com/uas/login-submit?loginSubmitSource=GUEST_HOME"
-        Assert.assertEquals(webDriver.getCurrentUrl(), url+"/uas/login-submit?loginSubmitSource=GUEST_HOME", "Forgot password page url is wrong");
+        Assert.assertEquals(webDriver.getCurrentUrl(), url + "/uas/login-submit?loginSubmitSource=GUEST_HOME", "Forgot password page url is wrong");
         //Verify that error message about wrong password appears
         Assert.assertEquals(wrongPasswordAlert.getText(), wrongPasswordMessage, "Alert message is wrong");
     }
@@ -55,10 +55,34 @@ public class LoginTest {
 
         WebElement profileButton = webDriver.findElement(By.xpath("//*[@id='profile-nav-item']"));
         //Verify that page url is "https://www.linkedin.com/feed/"
-        Assert.assertEquals(webDriver.getCurrentUrl(), url+"/feed/", "Home page url is wrong");
+        Assert.assertEquals(webDriver.getCurrentUrl(), url + "/feed/", "Home page url is wrong");
         //Verify that page title is "LinkedIn"
         Assert.assertTrue(webDriver.getTitle().contains("LinkedIn"), "Home page title is wrong");
         //Verify that "Profile" button exist
         Assert.assertTrue(profileButton.isDisplayed(), "Home page profile button is absent");
     }
+
+    @Test
+    public void forgotPasswordTest() {
+        LoginPage loginPage = new LoginPage(webDriver);
+        loginPage.forgotPasswordLink.click();
+
+        WebElement resetPasswordButton = webDriver.findElement(By.xpath("//*[@id='reset-password-submit-button']"));
+        WebElement joinNowButton = webDriver.findElement(By.xpath("//*[@class='nav__button--joinnow']"));
+        //Verify that "Reset Password" button exist
+        Assert.assertTrue(resetPasswordButton.isDisplayed(), "Reset password button is absent");
+        //Verify that "Join Now" button exist
+        Assert.assertTrue(joinNowButton.isDisplayed(), "Join Now button is absent");
+
+    }
+
+    @Test
+    public void wrongRegistrationTest() {
+        LoginPage loginPage = new LoginPage(webDriver);
+        loginPage.submitRegistrationButton.click();
+
+        //Verify that "Wrong Registration" alert exist
+        Assert.assertTrue(loginPage.wrongRegistrationAlert.isDisplayed(), "Wrong registration alert is absent");
+    }
+
 }
