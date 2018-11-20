@@ -81,8 +81,9 @@ public class LoginTest {
         LoginPage loginPage = new LoginPage(webDriver);
         loginPage.submitRegistrationButton.click();
 
+        WebElement wrongRegistrationAlert = webDriver.findElement(By.xpath("//*[@class='reg-alert']"));
         //Verify that "Wrong Registration" alert exist
-        Assert.assertTrue(loginPage.wrongRegistrationAlert.isDisplayed(), "Wrong registration alert is absent");
+        Assert.assertTrue(wrongRegistrationAlert.isDisplayed(), "Wrong registration alert is absent");
     }
 
 }
