@@ -1,6 +1,4 @@
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -37,9 +35,7 @@ public class LoginTest {
     @Test
     public void successfulLoginTest() {
         LoginPage loginPage = new LoginPage(webDriver);
-        loginPage.login("mr3y6p+test@gmail.com", "q0w9e8r7");
-
-        HomePage homePage = new HomePage(webDriver);
+        HomePage homePage = loginPage.loginToHome("mr3y6p+test@gmail.com", "q0w9e8r7");
 
         //Verify that Home page is loaded
         Assert.assertTrue(homePage.isPageLoaded(), "Home page is not loaded");

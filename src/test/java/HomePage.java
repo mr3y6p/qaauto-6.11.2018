@@ -4,7 +4,7 @@ import org.openqa.selenium.WebElement;
 
 public class HomePage {
 
-    WebDriver webDriver;
+    private WebDriver webDriver;
 
     private WebElement profileButton;
     private WebElement welcomeMessage;
@@ -22,6 +22,7 @@ public class HomePage {
     public boolean isPageLoaded() {
         return profileButton.isDisplayed()
                 && webDriver.getTitle().contains("LinkedIn")
+                && webDriver.getCurrentUrl().equals("https://www.linkedin.com/feed/")
                 && welcomeMessage.isDisplayed();
     }
 }
