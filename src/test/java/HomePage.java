@@ -6,16 +6,22 @@ public class HomePage {
 
     WebDriver webDriver;
 
-    WebElement profileButton;
-    WebElement welcomeMessage;
+    private WebElement profileButton;
+    private WebElement welcomeMessage;
 
     public HomePage(WebDriver webDriver) {
         this.webDriver = webDriver;
         initElements();
     }
 
-    public void initElements() {
+    private void initElements() {
         profileButton = webDriver.findElement(By.xpath("//*[@id='profile-nav-item']"));
         welcomeMessage = webDriver.findElement(By.xpath("//a[@data-control-name='identity_welcome_message']"));
+    }
+
+    public boolean isPageLoaded() {
+        return profileButton.isDisplayed()
+                && webDriver.getTitle().contains("LinkedIn")
+                && welcomeMessage.isDisplayed();
     }
 }
