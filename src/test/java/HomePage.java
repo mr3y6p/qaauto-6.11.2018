@@ -1,23 +1,20 @@
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
-public class HomePage {
+public class HomePage extends BasePage {
 
-    private WebDriver webDriver;
-
+    @FindBy(xpath = "//*[@id='profile-nav-item']")
     private WebElement profileButton;
+    @FindBy(xpath = "//a[@data-control-name='identity_welcome_message']")
     private WebElement welcomeMessage;
 
     public HomePage(WebDriver webDriver) {
         this.webDriver = webDriver;
-        initElements();
+        PageFactory.initElements(webDriver, this);
     }
 
-    private void initElements() {
-        profileButton = webDriver.findElement(By.xpath("//*[@id='profile-nav-item']"));
-        welcomeMessage = webDriver.findElement(By.xpath("//a[@data-control-name='identity_welcome_message']"));
-    }
 
     public boolean isPageLoaded() {
         return profileButton.isDisplayed()

@@ -3,16 +3,18 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class LoginPage {
-
-    private WebDriver webDriver;
+public class LoginPage extends BasePage{
 
     @FindBy(xpath = "//*[@id='login-email']")
     private WebElement emailField;
+
     @FindBy(xpath = "//*[@id='login-password']")
     private WebElement passwordField;
+
     @FindBy(xpath = "//*[@id='login-submit']")
     private WebElement signInButton;
+
+
     private String url = "https://www.linkedin.com/";
 
     public LoginPage(WebDriver webDriver) {
@@ -20,25 +22,20 @@ public class LoginPage {
         PageFactory.initElements(webDriver, this);
     }
 
-    public LoginSubmitPage loginToLoginSubmit(String userEmail, String userPass) {
-        emailField.sendKeys(userEmail);
-        passwordField.sendKeys(userPass);
-        signInButton.click();
-        return new LoginSubmitPage(webDriver);
-    }
 
-    public HomePage loginToHome(String userEmail, String userPass) {
+    public <T> T login(String userEmail, String userPass) {
         emailField.sendKeys(userEmail);
         passwordField.sendKeys(userPass);
         signInButton.click();
-        return new HomePage(webDriver);
-    }
-
-    public LoginPage login(String userEmail, String userPass) {
-        emailField.sendKeys(userEmail);
-        passwordField.sendKeys(userPass);
-        signInButton.click();
-        return new LoginPage(webDriver);
+        if (webDriver.getCurrentUrl().contains("/feed")) {
+            return (T) new HomePage(webDriver);
+        }
+        if (webDriver.getCurrentUrl().contains("/login-submit")) {
+            return (T) new LoginSubmitPage(webDriver);
+        }
+        else {
+            return (T) new LoginPage(webDriver);
+        }
     }
 
     public boolean isPageLoaded() {

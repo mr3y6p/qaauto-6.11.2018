@@ -3,6 +3,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class LoginTest {
@@ -31,11 +32,20 @@ public class LoginTest {
         Assert.assertTrue(loginPage.isPageLoaded(), "LogIn page is not loaded");
     }
 
+    @DataProvider
+    public Object[][] validDataProvider() {
+        return new Object[][]{
+                { "mr3y6p+test@gmail.com", "q0w9e8r7" },
+                { "mr3y6p+test@Gmail.COM", "q0w9e8r7" },
+                { " mr3y6p+test@gmail.com ", "q0w9e8r7" }
+        };
+    }
 
-    @Test
-    public void successfulLoginTest() {
+
+    @Test(dataProvider = "validDataProvider")
+    public void successfulLoginTest(String userEmail, String userPass) {
         LoginPage loginPage = new LoginPage(webDriver);
-        HomePage homePage = loginPage.loginToHome("mr3y6p+test@gmail.com", "q0w9e8r7");
+        HomePage homePage = loginPage.login(userEmail, userPass);
 
         //Verify that Home page is loaded
         Assert.assertTrue(homePage.isPageLoaded(), "Home page is not loaded");
@@ -45,12 +55,20 @@ public class LoginTest {
     @Test
     public void negativeLeadsToLoginSubmitPage() {
         LoginPage loginPage = new LoginPage(webDriver);
-        loginPage.login("mr3y6p+test@gmail.com", "wrongPassword");
 
-        LoginSubmitPage loginSubmitPage = new LoginSubmitPage(webDriver);
+        LoginSubmitPage loginSubmitPage = loginPage.login(
+                "mr3y6p+test@gmail.com", "wrong");
 
-        //Verify that Login Submit page is loaded
-        Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login submit page is not loaded");
+        Assert.assertTrue(loginSubmitPage.isPageLoaded(),
+                "Login Submit page is not loaded.");
+
+        Assert.assertEquals(loginSubmitPage.getUserEmailError(),
+                "",
+                "userEmail Validation message is wrong.");
+
+        Assert.assertEquals(loginSubmitPage.getUserPassError(),
+                "Hmm, that's not the right password. Please try again or request a new one.",
+                "userPass Validation message is wrong.");
     }
 
 }
