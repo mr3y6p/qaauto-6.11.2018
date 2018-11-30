@@ -27,7 +27,33 @@ public class LoginTest {
     public Object[][] emptyFieldDataProvider() {
         return new Object[][]{
                 { "mr3y6p+test@gmail.com", "" },
-                { "", "q0w9e8r7" }
+                { "", "q0w9e8r7" },
+                { "", "" }
+        };
+    }
+
+    @DataProvider
+    public Object[][] validDataProvider() {
+        return new Object[][]{
+                { "mr3y6p+test@gmail.com", "q0w9e8r7" },
+                { "mr3y6p+test@Gmail.COM", "q0w9e8r7" },
+                { " mr3y6p+test@gmail.com ", "q0w9e8r7" }
+        };
+    }
+
+    @DataProvider
+    public Object[][] incorrectFieldDataProvider() {
+        return new Object[][]{
+                { "mr3y6p+test@gmail.comq", "1111", "We don't recognize that email.\n" + "Did you mean: @gmail.com?", ""},
+                { "mr3y6p+test@gmail.com", "testtest", "", "Hmm, that's not the right password. Please try again or request a new one."},
+                { "mr3y6p+test@amazos.com", "1111", "We don't recognize that email.\n" + "Did you mean: @amazon.com?", ""},
+                { "mr3y6p+test@linkedinn.com", "1111", "We don't recognize that email.\n" + "Did you mean: @linkedin.com?", ""},
+                { "1243", "1111", "Be sure to include \"+\" and your country code.", ""},
+                { "+1234", "1111", "Hmm, we don’t recognize that phone number. Please try again", ""},
+                { "mr3y6p+test1@gmail.com", "q0w9e8r7", "Hmm, we don't recognize that email. Please try again.", ""},
+                { "test", "1111", "Please enter a valid email address.", ""},
+                { "mr3y6p+test1@gmail.com", "q0w9e8r7", "Hmm, we don't recognize that email. Please try again.", ""},
+                { "mr3y6p+test@iicloud.com", "1111", "We don't recognize that email.\n" + "Did you mean: @icloud?", ""}
         };
     }
 
@@ -40,15 +66,6 @@ public class LoginTest {
         Assert.assertTrue(loginPage.isPageLoaded(), "LogIn page is not loaded");
     }
 
-    @DataProvider
-    public Object[][] validDataProvider() {
-        return new Object[][]{
-                { "mr3y6p+test@gmail.com", "q0w9e8r7" },
-                { "mr3y6p+test@Gmail.COM", "q0w9e8r7" },
-                { " mr3y6p+test@gmail.com ", "q0w9e8r7" }
-        };
-    }
-
 
     @Test(dataProvider = "validDataProvider")
     public void successfulLoginTest(String userEmail, String userPass) {
@@ -57,18 +74,6 @@ public class LoginTest {
 
         //Verify that Home page is loaded
         Assert.assertTrue(homePage.isPageLoaded(), "Home page is not loaded");
-    }
-
-
-    @DataProvider
-    public Object[][] incorrectFieldDataProvider() {
-        return new Object[][]{
-                { "mr3y6p+test@gmail.comq", "q0w9e8r7", "We don't recognize that email. Did you mean: @gmail.com?", ""},
-                { "mr3y6p+test@gmail.com", "testtest", "", "Hmm, that's not the right password. Please try again or request a new one."},
-                { "mr3y6p+test@amazos.com", "q0w9e8r7", "We don't recognize that email. Did you mean: @amazon.com?", ""},
-                { "mr3y6p+test@linkedinn.com", "q0w9e8r7", "We don't recognize that email. Did you mean: @linkedin.com?", ""},
-                { "mr3y6p+test1@gmail.com", "q0w9e8r7", "Hmm, we don't recognize that email. Please try again.", ""}
-        };
     }
 
 
