@@ -23,10 +23,18 @@ public class LoginTest {
         webDriver.quit();
     }
 
-    @Test
-    public void emptyPasswordTest() {
+    @DataProvider
+    public Object[][] emptyFieldDataProvider() {
+        return new Object[][]{
+                { "mr3y6p+test@gmail.com", "" },
+                { "", "q0w9e8r7" }
+        };
+    }
+
+    @Test(dataProvider = "emptyFieldDataProvider")
+    public void emptyPasswordTest(String userEmail, String userPass) {
         LoginPage loginPage = new LoginPage(webDriver);
-        loginPage.login("mr3y6p+test@gmail.com", "");
+        loginPage.login(userEmail, userPass);
 
         //Verify that Login page is still loaded
         Assert.assertTrue(loginPage.isPageLoaded(), "LogIn page is not loaded");
@@ -52,22 +60,34 @@ public class LoginTest {
     }
 
 
-    @Test
-    public void negativeLeadsToLoginSubmitPage() {
+    @DataProvider
+    public Object[][] incorrectFieldDataProvider() {
+        return new Object[][]{
+                { "mr3y6p+test@gmail.comq", "q0w9e8r7", "We don't recognize that email. Did you mean: @gmail.com?", ""},
+                { "mr3y6p+test@gmail.com", "testtest", "", "Hmm, that's not the right password. Please try again or request a new one."},
+                { "mr3y6p+test@amazos.com", "q0w9e8r7", "We don't recognize that email. Did you mean: @amazon.com?", ""},
+                { "mr3y6p+test@linkedinn.com", "q0w9e8r7", "We don't recognize that email. Did you mean: @linkedin.com?", ""},
+                { "mr3y6p+test1@gmail.com", "q0w9e8r7", "Hmm, we don't recognize that email. Please try again.", ""}
+        };
+    }
+
+
+    @Test(dataProvider = "incorrectFieldDataProvider")
+    public void negativeLeadsToLoginSubmitPage(String userEmail, String userPass, String emailError, String passError) {
         LoginPage loginPage = new LoginPage(webDriver);
 
         LoginSubmitPage loginSubmitPage = loginPage.login(
-                "mr3y6p+test@gmail.com", "wrong");
+                userEmail, userPass);
 
         Assert.assertTrue(loginSubmitPage.isPageLoaded(),
                 "Login Submit page is not loaded.");
 
         Assert.assertEquals(loginSubmitPage.getUserEmailError(),
-                "",
+                emailError,
                 "userEmail Validation message is wrong.");
 
         Assert.assertEquals(loginSubmitPage.getUserPassError(),
-                "Hmm, that's not the right password. Please try again or request a new one.",
+                passError,
                 "userPass Validation message is wrong.");
     }
 
