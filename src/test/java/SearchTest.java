@@ -35,7 +35,7 @@ public class SearchTest {
      * - Enter "HR" into searchField
      * - Press Return button on keyboard
      * - Verify SearchResult page is loaded
-     * - Verify results list contains 10 items
+     * - Verify results list contains 9 items
      * - Verify each item contains searchTerm
      *
      * Postcondition:
@@ -49,6 +49,8 @@ public class SearchTest {
 
         SearchResultsPage searchResultsPage = homePage.search(searchTerm);
         Assert.assertTrue(searchResultsPage.isPageLoaded(), "SearchResult page is not loaded");
+        Assert.assertEquals(searchResultsPage.getResultsNumber(), 9, "Result list is not 9");
+        Assert.assertTrue(searchResultsPage.isSearchTermExist(searchTerm), "Some result element does not contain searchTerm");
 
     }
 }
