@@ -1,27 +1,12 @@
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+package test;
+
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import page.HomePage;
+import page.LoginSubmitPage;
 
-public class LoginTest {
-    WebDriver webDriver;
-    String url;
-
-    @BeforeMethod
-    public void beforeMethod() {
-        url = "https://www.linkedin.com";
-        webDriver = new ChromeDriver();
-        webDriver.manage().window().fullscreen();
-        webDriver.get(url);
-    }
-
-    @AfterMethod
-    public void afterMethod() {
-        webDriver.quit();
-    }
+public class LoginTest extends BaseTest{
 
     @DataProvider
     public Object[][] emptyFieldDataProvider() {
@@ -53,13 +38,12 @@ public class LoginTest {
                 { "mr3y6p+test1@gmail.com", "q0w9e8r7", "Hmm, we don't recognize that email. Please try again.", ""},
                 { "test", "1111", "Please enter a valid email address.", ""},
                 { "mr3y6p+test1@gmail.com", "q0w9e8r7", "Hmm, we don't recognize that email. Please try again.", ""},
-                { "mr3y6p+test@iicloud.com", "1111", "We don't recognize that email.\n" + "Did you mean: @icloud?", ""}
+                { "mr3y6p+test@iicloud.com", "1111", "We don't recognize that email.\n" + "Did you mean: @icloud.com?", ""}
         };
     }
 
     @Test(dataProvider = "emptyFieldDataProvider")
     public void emptyPasswordTest(String userEmail, String userPass) {
-        LoginPage loginPage = new LoginPage(webDriver);
         loginPage.login(userEmail, userPass);
 
         //Verify that Login page is still loaded
@@ -69,7 +53,6 @@ public class LoginTest {
 
     @Test(dataProvider = "validDataProvider")
     public void successfulLoginTest(String userEmail, String userPass) {
-        LoginPage loginPage = new LoginPage(webDriver);
         HomePage homePage = loginPage.login(userEmail, userPass);
 
         //Verify that Home page is loaded
@@ -79,7 +62,6 @@ public class LoginTest {
 
     @Test(dataProvider = "incorrectFieldDataProvider")
     public void negativeLeadsToLoginSubmitPage(String userEmail, String userPass, String emailError, String passError) {
-        LoginPage loginPage = new LoginPage(webDriver);
 
         LoginSubmitPage loginSubmitPage = loginPage.login(
                 userEmail, userPass);
