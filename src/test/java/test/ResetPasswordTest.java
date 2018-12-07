@@ -4,6 +4,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import page.*;
 
+import static java.lang.Thread.sleep;
+
 public class ResetPasswordTest extends BaseTest {
 
     /**
@@ -38,7 +40,11 @@ public class ResetPasswordTest extends BaseTest {
         Assert.assertTrue(requestPasswordResetSubmitPage.isPageLoaded(), "Request Password Reset Submit Page is not loaded");
 
         /* This step should contain login to the email and check email. Now wait 2 minutes was added */
-        wait(40000);
+        try {
+            sleep(40000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         PasswordResetPage passwordResetPage = new PasswordResetPage(webDriver);
         Assert.assertTrue(passwordResetPage.isPageLoaded(), "Password Reset Page is not loaded");
 
