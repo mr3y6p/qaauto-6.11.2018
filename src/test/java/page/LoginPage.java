@@ -16,6 +16,9 @@ public class LoginPage extends BasePage{
     @FindBy(xpath = "//*[@id='login-submit']")
     private WebElement signInButton;
 
+    @FindBy(xpath = "//*[@class='link-forgot-password']")
+    private WebElement forgotPasswordLink;
+
 
     private String url = "https://www.linkedin.com/";
 
@@ -44,6 +47,11 @@ public class LoginPage extends BasePage{
         return signInButton.isDisplayed()
                 && webDriver.getTitle().equals("LinkedIn: Log In or Sign Up")
                 && webDriver.getCurrentUrl().equals(url);
+    }
+
+    public RequestPasswordResetPage open() {
+        forgotPasswordLink.click();
+        return new RequestPasswordResetPage(webDriver);
     }
 
 
