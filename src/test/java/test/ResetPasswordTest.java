@@ -4,7 +4,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import page.*;
 
-import static java.lang.Thread.sleep;
 
 public class ResetPasswordTest extends BaseTest {
 
@@ -32,23 +31,19 @@ public class ResetPasswordTest extends BaseTest {
      */
 
     @Test
-    public void basicResetPasswordTest() throws InterruptedException {
-        RequestPasswordResetPage requestPasswordResetPage = loginPage.open();
+    public void basicResetPasswordTest() {
+        String userEmail = "mr3y6p+test@gmail.com";
+
+        RequestPasswordResetPage requestPasswordResetPage = loginPage.clickOnForgotPasswordLink();
         Assert.assertTrue(requestPasswordResetPage.isPageLoaded(), "Request Password Reset Page is not loaded");
 
-        RequestPasswordResetSubmitPage requestPasswordResetSubmitPage = requestPasswordResetPage.requestResetPassword("mr3y6p+test@gmail.com");
+        RequestPasswordResetSubmitPage requestPasswordResetSubmitPage = requestPasswordResetPage.findAccount(userEmail);
         Assert.assertTrue(requestPasswordResetSubmitPage.isPageLoaded(), "Request Password Reset Submit Page is not loaded");
 
-        /* This step should contain login to the email and check email. Now wait 2 minutes was added */
-        try {
-            sleep(40000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        PasswordResetPage passwordResetPage = new PasswordResetPage(webDriver);
-        Assert.assertTrue(passwordResetPage.isPageLoaded(), "Password Reset Page is not loaded");
+        SetNewPasswordPage setNewPasswordPage = requestPasswordResetSubmitPage.navigateToLinkFromEmail();
+        Assert.assertTrue(setNewPasswordPage.isPageLoaded(), "Password Reset Page is not loaded");
 
-        PasswordResetSubmitPage passwordResetSubmitPage = passwordResetPage.resetPasswordSubmit("P@ssword1");
+        PasswordResetSubmitPage passwordResetSubmitPage = setNewPasswordPage.resetPasswordSubmit("P@ssword1");
         Assert.assertTrue(passwordResetSubmitPage.isPageLoaded(), "Password Reset Submit Page is not loaded");
 
         HomePage homePage = passwordResetSubmitPage.open();
