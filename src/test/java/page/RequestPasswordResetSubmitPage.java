@@ -25,7 +25,7 @@ public class RequestPasswordResetSubmitPage extends BasePage {
 
     public SetNewPasswordPage navigateToLinkFromEmail() {
         String messageSubject = "here's the link to reset your password";
-        String messageTo = "mr3y6p+tet@gmail.com";
+        String messageTo = "mzub.test@gmail.com";
         String messageFrom = "security-noreply@linkedin.com";
 
         String message = gMailService.waitMessage(

@@ -32,7 +32,7 @@ public class ResetPasswordTest extends BaseTest {
 
     @Test
     public void basicResetPasswordTest() {
-        String userEmail = "mr3y6p+test@gmail.com";
+        String userEmail = "mzub.test@gmail.com";
 
         RequestPasswordResetPage requestPasswordResetPage = loginPage.clickOnForgotPasswordLink();
         Assert.assertTrue(requestPasswordResetPage.isPageLoaded(), "Request Password Reset Page is not loaded");
