@@ -28,6 +28,10 @@ public class LoginSubmitPage extends BasePage {
         userEmailError = webDriver.findElement(By.xpath("//*[@id='error-for-username']"));
     }
 
+    /**
+     * Method to check if page is loaded
+     * @return true/false
+     */
     public boolean isPageLoaded() {
         return loginForm.isDisplayed()
                 && webDriver.getTitle().equals("Sign In to LinkedIn")

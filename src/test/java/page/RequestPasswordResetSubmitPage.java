@@ -13,6 +13,8 @@ public class RequestPasswordResetSubmitPage extends BasePage {
 
     @FindBy(xpath = "//*[contains(@class, 'form__action--sent-email')]")
     private WebElement sentEmilForm;
+    @FindBy(xpath = "//*[contains(a, 'Reset my password')]")
+    private WebElement resetPasswordLink;
 
     /**
      * Constructor of RequestPasswordResetSubmitPage class.
@@ -40,6 +42,18 @@ public class RequestPasswordResetSubmitPage extends BasePage {
         System.out.println("Connect: " + message);
 
         return new SetNewPasswordPage(webDriver);
-    };
+    }
+
+
+    private String getLinkFromEmail() {
+
+        String messageSubject = "here's the link to reset your password";
+        String messageTo = "mzub.test@gmail.com";
+        String messageFrom = "security-noreply@linkedin.com";
+
+        String message = gMailService.waitMessage(
+                messageSubject, messageTo, messageFrom, 60);
+        webDriver.getCurrentUrl()
+    }
 }
 

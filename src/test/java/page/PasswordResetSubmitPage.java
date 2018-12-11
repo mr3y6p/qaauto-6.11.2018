@@ -25,6 +25,10 @@ public class PasswordResetSubmitPage extends BasePage {
         PageFactory.initElements(webDriver, this);
     }
 
+    /**
+     * Method to check if page is loaded
+     * @return true/false
+     */
     public boolean isPageLoaded() {
         return resetPasswordConfirmForm.isDisplayed()
                 && webDriver.getCurrentUrl().contains("https://www.linkedin.com/checkpoint/rp/password-reset-submit")
