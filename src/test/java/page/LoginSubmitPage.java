@@ -4,12 +4,19 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+/**
+ * PageObject class for login submit page
+ */
 public class LoginSubmitPage extends BasePage {
 
     private WebElement loginForm;
     private WebElement userEmailError;
     private WebElement userPassError;
 
+    /**
+     * Constructor of LoginSubmitPage class.
+     * @param webDriver - webDriver instance from Test.
+     */
     public LoginSubmitPage(WebDriver webDriver) {
         this.webDriver = webDriver;
         initElements();

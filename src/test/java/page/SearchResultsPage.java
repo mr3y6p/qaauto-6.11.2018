@@ -9,6 +9,9 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * PageObject class for search result page
+ */
 public class SearchResultsPage extends BasePage {
 
     @FindBy(xpath = "//div[contains(@class, 'search-filters-bar')]")
@@ -17,6 +20,10 @@ public class SearchResultsPage extends BasePage {
     private List<WebElement> searchResults;
 
 
+    /**
+     * Constructor of SearchResultsPage class.
+     * @param webDriver - webDriver instance from Test.
+     */
     public SearchResultsPage(WebDriver webDriver) {
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver, this);

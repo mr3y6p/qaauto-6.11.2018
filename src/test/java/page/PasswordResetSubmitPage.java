@@ -5,6 +5,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+/**
+ * PageObject class for password reset submit page
+ */
 public class PasswordResetSubmitPage extends BasePage {
 
     @FindBy(xpath = "//form[@id='reset-password-confirm-form']")
@@ -13,6 +16,10 @@ public class PasswordResetSubmitPage extends BasePage {
     @FindBy(xpath = "//button[@id='reset-password-submit-button']")
     private WebElement openHomepageButton;
 
+    /**
+     * Constructor of PasswordResetSubmitPage class.
+     * @param webDriver - webDriver instance from Test.
+     */
     public PasswordResetSubmitPage(WebDriver webDriver) {
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver, this);

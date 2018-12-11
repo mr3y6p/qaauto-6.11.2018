@@ -6,11 +6,18 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import util.GMailService;
 
+/**
+ * PageObject class for request password reset submit page
+ */
 public class RequestPasswordResetSubmitPage extends BasePage {
 
     @FindBy(xpath = "//*[contains(@class, 'form__action--sent-email')]")
     private WebElement sentEmilForm;
 
+    /**
+     * Constructor of RequestPasswordResetSubmitPage class.
+     * @param webDriver - webDriver instance from Test.
+     */
     public RequestPasswordResetSubmitPage(WebDriver webDriver) {
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver, this);
