@@ -28,6 +28,7 @@ public class HomePage extends BasePage {
     public HomePage(WebDriver webDriver) {
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver, this);
+        waitUntilElementIsVisible(profileButton);
     }
 
 
@@ -50,11 +51,7 @@ public class HomePage extends BasePage {
     public SearchResultsPage search(String searchTerm) {
         searchField.sendKeys(searchTerm);
         searchField.sendKeys(Keys.RETURN);
-        try {
-            sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
         return new SearchResultsPage(webDriver);
     }
 }

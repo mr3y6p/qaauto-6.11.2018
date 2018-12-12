@@ -28,7 +28,7 @@ public class SearchTest extends BaseTest{
      */
     @Test
     public void basicSearchTest() {
-        HomePage homePage = loginPage.login("mzub.test@gmail.com", "q0w9e8r7");
+        HomePage homePage = loginPage.login("mzub.test@gmail.com", "P@ssword");
         String searchTerm = "PDFFiller";
 
         Assert.assertTrue(homePage.isPageLoaded(), "Home page is not loaded");

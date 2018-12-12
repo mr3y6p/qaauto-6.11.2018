@@ -1,0 +1,27 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Linkedin login tests">
+    <parameter name="browserName" value="Firefox"/>
+
+    <test name="Positive">
+        <classes>
+            <class name="test.LoginTest">
+                <methods>
+                    <include name="successfulLoginTest" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="Negative">
+        <classes>
+            <class name="test.LoginTest">
+                <methods>
+                    <include name="emptyPasswordTest" />
+                    <include name="negativeLeadsToLoginSubmitPage" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>

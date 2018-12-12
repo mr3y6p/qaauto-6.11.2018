@@ -20,9 +20,9 @@ public class LoginTest extends BaseTest{
     @DataProvider
     public Object[][] validDataProvider() {
         return new Object[][]{
-                { "mzub.test@gmail.com", "q0w9e8r7" },
-                { "mzub.test@Gmail.COM", "q0w9e8r7" },
-                { " mzub.test@gmail.com ", "q0w9e8r7" }
+                { "mzub.test@gmail.com", "P@ssword" },
+                { "mzub.test@Gmail.COM", "P@ssword" },
+                { " mzub.test@gmail.com ", "P@ssword" }
         };
     }
 

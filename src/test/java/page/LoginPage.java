@@ -36,9 +36,10 @@ public class LoginPage extends BasePage{
 
 
     /**
-     * @param userEmail - email of user account
-     * @param userPass - password of user account
-     * @param <T> - parameter which describe multi type
+     * Method to check behaviour after entering some information in login and password fields
+     * @param userEmail - string with user email
+     * @param userPass - string with user password
+     * @param <T> - generic type of returned page object
      * @return HomePage or LoginSubmitPage or LoginPage objects. It depends on the userEmail and userPass params
      */
     public <T> T login(String userEmail, String userPass) {

@@ -3,15 +3,22 @@ package page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 /**
  * PageObject class for login submit page
  */
 public class LoginSubmitPage extends BasePage {
 
+    @FindBy(xpath = "//form[@class='login__form']")
     private WebElement loginForm;
-    private WebElement userEmailError;
+
+    @FindBy(xpath = "//*[@id='error-for-password']")
     private WebElement userPassError;
+
+    @FindBy(xpath = "//*[@id='error-for-username']")
+    private WebElement userEmailError;
 
     /**
      * Constructor of LoginSubmitPage class.
@@ -19,13 +26,7 @@ public class LoginSubmitPage extends BasePage {
      */
     public LoginSubmitPage(WebDriver webDriver) {
         this.webDriver = webDriver;
-        initElements();
-    }
-
-    private void initElements() {
-        loginForm = webDriver.findElement(By.xpath("//form[@class='login__form']"));
-        userPassError = webDriver.findElement(By.xpath("//*[@id='error-for-password']"));
-        userEmailError = webDriver.findElement(By.xpath("//*[@id='error-for-username']"));
+        PageFactory.initElements(webDriver, this);
     }
 
     /**
