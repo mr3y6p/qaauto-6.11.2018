@@ -43,7 +43,7 @@ public class RequestPasswordResetSubmitPage extends BasePage {
         System.out.println("Connect: " + message);
         String resetPasswordLink =
                 StringUtils.substringBetween(message,
-                        "To change your LinkedIn password, click <a href=\"",
+                        "<a href=\"",
                         "\" style").replace("amp;", "");
         System.out.println(resetPasswordLink);
         webDriver.get(resetPasswordLink);

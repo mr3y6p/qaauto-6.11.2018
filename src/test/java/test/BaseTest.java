@@ -16,7 +16,7 @@ public class BaseTest {
 
     @Parameters("browserName")
     @BeforeMethod
-    public void beforeMethod(@Optional("firefox") String browserName) {
+    public void beforeMethod(@Optional("chrome") String browserName) {
         if (browserName.toLowerCase().equals("firefox")) {
             WebDriverManager.firefoxdriver().setup();
             webDriver = new FirefoxDriver();
